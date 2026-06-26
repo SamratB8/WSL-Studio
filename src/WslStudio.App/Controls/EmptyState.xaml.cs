@@ -4,20 +4,20 @@ using Microsoft.UI.Xaml.Controls;
 namespace WslStudio.App.Controls;
 
 /// <summary>
-/// Displays an informational card with an icon, title, and supporting description.
+/// Presents a neutral empty state for pages or sections with no available data.
 /// </summary>
-public sealed partial class InfoCard : UserControl
+public sealed partial class EmptyState : UserControl
 {
     public static readonly DependencyProperty TitleProperty =
-        DependencyProperty.Register(nameof(Title), typeof(string), typeof(InfoCard), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(Title), typeof(string), typeof(EmptyState), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register(nameof(Description), typeof(string), typeof(InfoCard), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(Description), typeof(string), typeof(EmptyState), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty IconProperty =
-        DependencyProperty.Register(nameof(Icon), typeof(Symbol), typeof(InfoCard), new PropertyMetadata(Symbol.Document));
+        DependencyProperty.Register(nameof(Icon), typeof(Symbol), typeof(EmptyState), new PropertyMetadata(Symbol.Document));
 
-    public InfoCard()
+    public EmptyState()
     {
         InitializeComponent();
     }

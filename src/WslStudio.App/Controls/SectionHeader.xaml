@@ -1,0 +1,15 @@
+<UserControl
+    x:Class="WslStudio.App.Controls.SectionHeader"
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="6">
+        <TextBlock
+            Style="{StaticResource SectionTitleTextBlockStyle}"
+            Text="{Binding Title, ElementName=Root}" />
+        <TextBlock
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            Text="{Binding Description, ElementName=Root}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</UserControl>
