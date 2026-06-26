@@ -2,9 +2,13 @@
     x:Class="WslStudio.App.Views.DistributionsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:WslStudio.App.Controls">
+    xmlns:controls="using:WslStudio.App.Controls"
+    Loaded="OnLoaded">
     <ScrollViewer>
-        <Grid MaxWidth="1180" Padding="32" RowSpacing="28">
+        <Grid
+            MaxWidth="{StaticResource PageMaxWidth}"
+            Padding="{StaticResource PagePadding}"
+            RowSpacing="{StaticResource PageRowSpacing}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -15,11 +19,76 @@
                 <TextBlock Style="{StaticResource PageSubtitleTextBlockStyle}" Text="{Binding Subtitle}" />
             </StackPanel>
 
-            <controls:InfoCard
+            <controls:LoadingState
                 Grid.Row="1"
-                Title="Distribution management is not connected yet"
-                Description="This page is reserved for real WSL discovery and lifecycle controls. No placeholder distributions are shown."
+                x:Name="LoadingState"
+                x:Load="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                Message="Loading distributions..." />
+
+            <controls:EmptyState
+                Grid.Row="1"
+                x:Name="EmptyState"
+                x:Load="{x:Bind ViewModel.IsEmpty, Mode=OneWay}"
+                Title="No distributions found"
+                Description="WSL did not report any installed distributions. This page only shows real read-only data returned by WSL."
                 Icon="Library" />
+
+            <controls:ErrorState
+                Grid.Row="1"
+                x:Name="ErrorState"
+                x:Load="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                Title="Distribution discovery could not complete"
+                Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
+
+            <ListView
+                Grid.Row="1"
+                x:Name="DistributionsList"
+                x:Load="{x:Bind ViewModel.HasDistributions, Mode=OneWay}"
+                ItemsSource="{x:Bind ViewModel.Distributions, Mode=OneWay}"
+                SelectionMode="None">
+                <ListView.Header>
+                    <Grid
+                        Padding="{StaticResource ListHeaderPadding}"
+                        ColumnSpacing="{StaticResource CardColumnSpacing}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource ListHeaderTextBlockStyle}" Text="Name" />
+                        <TextBlock Grid.Column="1" Style="{StaticResource ListHeaderTextBlockStyle}" Text="State" />
+                        <TextBlock Grid.Column="2" Style="{StaticResource ListHeaderTextBlockStyle}" Text="WSL version" />
+                        <TextBlock Grid.Column="3" Style="{StaticResource ListHeaderTextBlockStyle}" Text="Default" />
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:DistributionListItemViewModel" xmlns:viewModels="using:WslStudio.App.ViewModels">
+                        <Border Style="{StaticResource ListItemCardBorderStyle}">
+                            <Grid ColumnSpacing="{StaticResource CardColumnSpacing}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Style="{StaticResource ListPrimaryTextBlockStyle}" Text="{x:Bind Name}" />
+                                <controls:StatusBadge
+                                    Grid.Column="1"
+                                    Text="{x:Bind State}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Style="{StaticResource BodySecondaryTextBlockStyle}"
+                                    Text="{x:Bind Version}" />
+                                <controls:StatusBadge
+                                    Grid.Column="3"
+                                    Text="{x:Bind DefaultStatus}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </ScrollViewer>
 </Page>

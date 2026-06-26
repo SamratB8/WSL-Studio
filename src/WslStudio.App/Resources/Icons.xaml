@@ -1,0 +1,9 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Symbol x:Key="DashboardSymbol">Home</Symbol>
+    <Symbol x:Key="DistributionsSymbol">Library</Symbol>
+    <Symbol x:Key="DiagnosticsSymbol">Find</Symbol>
+    <Symbol x:Key="WarningSymbol">Important</Symbol>
+</ResourceDictionary>
