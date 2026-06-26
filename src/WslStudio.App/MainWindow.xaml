@@ -1,0 +1,17 @@
+<Window
+    x:Class="WslStudio.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="WSL Studio">
+    <Grid Padding="24">
+        <StackPanel Spacing="8">
+            <TextBlock
+                FontSize="28"
+                FontWeight="SemiBold"
+                Text="WSL Studio" />
+            <TextBlock
+                Text="Foundation shell"
+                TextWrapping="Wrap" />
+        </StackPanel>
+    </Grid>
+</Window>

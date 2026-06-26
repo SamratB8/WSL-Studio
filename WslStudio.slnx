@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WslStudio.App/WslStudio.App.csproj" />
+    <Project Path="src/WslStudio.Application/WslStudio.Application.csproj" />
+    <Project Path="src/WslStudio.Core/WslStudio.Core.csproj" />
+    <Project Path="src/WslStudio.Infrastructure/WslStudio.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WslStudio.Tests/WslStudio.Tests.csproj" />
+  </Folder>
+</Solution>
