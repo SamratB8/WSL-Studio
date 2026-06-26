@@ -1,0 +1,25 @@
+<Page
+    x:Class="WslStudio.App.Views.DiagnosticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WslStudio.App.Controls">
+    <ScrollViewer>
+        <Grid MaxWidth="1180" Padding="32" RowSpacing="28">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Spacing="8">
+                <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="{Binding Title}" />
+                <TextBlock Style="{StaticResource PageSubtitleTextBlockStyle}" Text="{Binding Subtitle}" />
+            </StackPanel>
+
+            <controls:InfoCard
+                Grid.Row="1"
+                Title="Diagnostics are not collecting data yet"
+                Description="Future diagnostics will separate application errors from WSL command output and keep local privacy expectations clear."
+                Icon="Find" />
+        </Grid>
+    </ScrollViewer>
+</Page>

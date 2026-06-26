@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using WslStudio.App.Services;
 
 namespace WslStudio.App;
 
@@ -14,7 +15,7 @@ public partial class App : Application
         InitializeComponent();
 
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-        builder.Services.AddSingleton<MainWindow>();
+        builder.Services.AddPresentation();
 
         _host = builder.Build();
     }
