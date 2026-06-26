@@ -19,6 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IWslVersionParser, WslVersionParser>();
         services.AddTransient<IWslDistributionDiscoveryService, WslDistributionDiscoveryService>();
         services.AddTransient<IWslDashboardOverviewService, WslDashboardOverviewService>();
+        services.AddTransient<IWslHealthCenterService, WslHealthCenterService>();
 
         services.AddTransient<DashboardViewModel>();
         services.AddTransient<DistributionsViewModel>();
