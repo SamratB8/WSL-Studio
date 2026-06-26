@@ -5,7 +5,7 @@ using WslStudio.App.Services;
 
 namespace WslStudio.App;
 
-public partial class App : Application
+public partial class App : Microsoft.UI.Xaml.Application
 {
     private readonly IHost _host;
     private Window? _window;
