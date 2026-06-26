@@ -5,7 +5,10 @@
     xmlns:controls="using:WslStudio.App.Controls"
     Loaded="OnLoaded">
     <ScrollViewer>
-        <Grid MaxWidth="1180" Padding="32" RowSpacing="28">
+        <Grid
+            MaxWidth="{StaticResource PageMaxWidth}"
+            Padding="{StaticResource PagePadding}"
+            RowSpacing="{StaticResource PageRowSpacing}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -44,25 +47,25 @@
                 ItemsSource="{x:Bind ViewModel.Distributions, Mode=OneWay}"
                 SelectionMode="None">
                 <ListView.Header>
-                    <Grid Padding="16,0,16,8" ColumnSpacing="16">
+                    <Grid
+                        Padding="{StaticResource ListHeaderPadding}"
+                        ColumnSpacing="{StaticResource CardColumnSpacing}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Name" />
-                        <TextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="State" />
-                        <TextBlock Grid.Column="2" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="WSL version" />
-                        <TextBlock Grid.Column="3" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Default" />
+                        <TextBlock Style="{StaticResource ListHeaderTextBlockStyle}" Text="Name" />
+                        <TextBlock Grid.Column="1" Style="{StaticResource ListHeaderTextBlockStyle}" Text="State" />
+                        <TextBlock Grid.Column="2" Style="{StaticResource ListHeaderTextBlockStyle}" Text="WSL version" />
+                        <TextBlock Grid.Column="3" Style="{StaticResource ListHeaderTextBlockStyle}" Text="Default" />
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:DistributionListItemViewModel" xmlns:viewModels="using:WslStudio.App.ViewModels">
-                        <Border
-                            Margin="0,4"
-                            Style="{StaticResource CompactCardBorderStyle}">
-                            <Grid ColumnSpacing="16">
+                        <Border Style="{StaticResource ListItemCardBorderStyle}">
+                            <Grid ColumnSpacing="{StaticResource CardColumnSpacing}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="*" />
@@ -70,17 +73,13 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    FontWeight="SemiBold"
-                                    Text="{x:Bind Name}"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
+                                <TextBlock Style="{StaticResource ListPrimaryTextBlockStyle}" Text="{x:Bind Name}" />
+                                <controls:StatusBadge
                                     Grid.Column="1"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Text="{x:Bind State}" />
                                 <TextBlock
                                     Grid.Column="2"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource BodySecondaryTextBlockStyle}"
                                     Text="{x:Bind Version}" />
                                 <controls:StatusBadge
                                     Grid.Column="3"

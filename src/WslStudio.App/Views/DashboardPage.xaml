@@ -7,10 +7,10 @@
     Loaded="OnLoaded">
     <ScrollViewer>
         <Grid
-            MaxWidth="1180"
-            Padding="32"
+            MaxWidth="{StaticResource PageMaxWidth}"
+            Padding="{StaticResource PagePadding}"
             HorizontalAlignment="Stretch"
-            RowSpacing="28">
+            RowSpacing="{StaticResource PageRowSpacing}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -44,7 +44,7 @@
                 Grid.Row="1"
                 x:Name="OverviewState"
                 x:Load="{x:Bind ViewModel.HasOverview, Mode=OneWay}"
-                RowSpacing="16">
+                RowSpacing="{StaticResource CardRowSpacing}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -55,8 +55,8 @@
                         <UniformGridLayout
                             MaximumRowsOrColumns="4"
                             MinItemWidth="220"
-                            MinRowSpacing="16"
-                            MinColumnSpacing="16" />
+                            MinRowSpacing="{StaticResource CardRowSpacing}"
+                            MinColumnSpacing="{StaticResource CardColumnSpacing}" />
                     </ItemsRepeater.Layout>
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:OverviewCardViewModel">
@@ -69,7 +69,7 @@
                 </ItemsRepeater>
 
                 <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
-                    <Grid ColumnSpacing="20">
+                    <Grid ColumnSpacing="{StaticResource SectionColumnSpacing}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -100,7 +100,7 @@
                             <controls:SectionHeader Title="WSL environment" />
                             <TextBlock
                                 Grid.Row="1"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodySecondaryTextBlockStyle}"
                                 Text="{x:Bind ViewModel.WslStatus, Mode=OneWay}"
                                 TextWrapping="Wrap" />
 
@@ -110,7 +110,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodySecondaryTextBlockStyle}"
                                 Text="{x:Bind ViewModel.WslVersion, Mode=OneWay}"
                                 TextWrapping="Wrap" />
                         </Grid>
@@ -119,7 +119,7 @@
             </Grid>
 
             <Border Grid.Row="2" Style="{StaticResource CardBorderStyle}">
-                <Grid ColumnSpacing="20">
+                <Grid ColumnSpacing="{StaticResource SectionColumnSpacing}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
