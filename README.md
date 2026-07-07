@@ -421,9 +421,9 @@ Infrastructure
 Common development commands:
 
 ```powershell
-- dotnet build WslStudio.slnx
-- dotnet test WslStudio.slnx --no-build
-- dotnet run --project src/WslStudio.App
+dotnet build WslStudio.slnx
+dotnet test WslStudio.slnx --no-build
+dotnet run --project src/WslStudio.App
 ```
 
 Recommended workflow:
