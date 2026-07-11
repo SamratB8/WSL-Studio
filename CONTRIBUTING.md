@@ -1,17 +1,11 @@
 # Contributing to WSL Studio
 
-<<<<<<< HEAD
-Thank you for considering a contribution to WSL Studio. The project is in active development, currently in **Phase 3 — WSL Workspace** (see the [roadmap](docs/roadmap.md)). The application is intentionally **read-only** with respect to WSL state during this phase, so contributions should focus on read-only discovery, diagnostics, inspection, workspace polish, documentation, tests, and architecture review.
-
-Mutating or destructive WSL operations (start, stop, terminate, shutdown, import, export, unregister, configuration editing) are deferred to later phases and should not be introduced unless an issue explicitly schedules them.
-=======
 First off, thank you for your interest in contributing to **WSL
 Studio**.
 
 Whether you're fixing a typo, improving the UI, writing tests, reviewing
 architecture, or implementing a new feature, your contribution is
 appreciated.
->>>>>>> origin/main
 
 WSL Studio aims to become a modern, safe, and extensible management
 platform for Windows Subsystem for Linux (WSL). We value thoughtful
@@ -26,21 +20,6 @@ WSL Studio is currently in **Phase 3 -- WSL Workspace**.
 
 The project already includes:
 
-<<<<<<< HEAD
-The implementation stack is C#, .NET 10, WinUI 3, Windows App SDK, CommunityToolkit.Mvvm, the .NET Generic Host, and xUnit. SQLite is planned for application-owned data in a later phase.
-
-Contributors should follow these standards:
-
-- Prefer clear, maintainable C# over clever abstractions.
-- Keep UI code separate from WSL command execution; the UI does not call `wsl.exe` directly.
-- Route WSL operations through reviewed application services; view models call services rather than executing processes or parsing output.
-- Use structured process execution rather than shell-interpolated command strings.
-- Add tests for parsing, validation, command construction, and safety policies.
-- Keep public behavior documented when it affects users.
-- Follow established .NET naming and formatting conventions.
-
-## Pull Request Expectations
-=======
 -   WinUI 3 application shell
 -   Clean Architecture
 -   Generic Host + Dependency Injection
@@ -63,7 +42,6 @@ later roadmap phases.
 ------------------------------------------------------------------------
 
 # Our Principles
->>>>>>> origin/main
 
 Every contribution should support these principles:
 
@@ -134,16 +112,6 @@ Must **not**:
 
 ### WslStudio.Application
 
-<<<<<<< HEAD
-During Phase 3 (WSL Workspace), the application stays read-only:
-
-- Do not add commands that start, stop, terminate, shut down, import, export, or unregister distributions.
-- Do not add configuration editing or other state-changing WSL operations.
-- Do not introduce background services or performance monitoring that runs continuously.
-- Do not add invented screenshots, badges, release artifacts, or fake production data.
-
-GitHub Actions and MSIX packaging are scheduled for a later phase. These items, and any state-changing WSL operations, will be introduced when the roadmap and security model are ready for them.
-=======
 Contains:
 
 -   Use cases
@@ -377,4 +345,3 @@ WSL Studio values:
 
 Every feature should leave the project in a better state than it was
 found.
->>>>>>> origin/main
