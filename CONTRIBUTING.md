@@ -288,11 +288,11 @@ Never post secrets or sensitive information.
 
 Features are categorized as:
 
-  Level          Meaning
-  -------------- -------------------------------------
-  Stable         Recommended for everyone
-  Preview        Functional but evolving
-  Experimental   Power-user features that may change
+  |Level|Meaning|
+  |--------------|-------------------------------------|
+  |Stable|Recommended for everyone|
+  |Preview|Functional but evolving|
+  |Experimental|Power-user features that may change|
 
 Experimental features should always be opt-in.
 
