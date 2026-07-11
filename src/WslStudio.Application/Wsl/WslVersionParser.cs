@@ -17,11 +17,17 @@ public sealed class WslVersionParser : IWslVersionParser
         values.TryGetValue("Kernel version", out string? kernelVersion);
         values.TryGetValue("WSLg version", out string? wslgVersion);
         values.TryGetValue("Windows version", out string? windowsVersion);
+        values.TryGetValue("Direct3D version", out string? direct3DVersion);
+        values.TryGetValue("DXCore version", out string? dxCoreVersion);
+        values.TryGetValue("MSRDC version", out string? msrdcVersion);
 
         return WslVersionParseResult.Success(new WslVersionInfo(
             wslVersion,
             kernelVersion,
             wslgVersion,
-            windowsVersion));
+            windowsVersion,
+            direct3DVersion,
+            dxCoreVersion,
+            msrdcVersion));
     }
 }

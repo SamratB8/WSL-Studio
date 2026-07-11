@@ -1,19 +1,21 @@
 # Architecture
 
-This document describes the planned architecture for WSL Studio. It is a Phase 0 planning document and does not define completed code or project files.
+This document describes the architecture of WSL Studio. The layered structure described here is implemented in the solution (Core, Application, Infrastructure, and the WinUI 3 App). The application is currently **read-only** with respect to WSL state; sections that describe mutating or destructive operations are forward-looking and are gated behind later phases and the security model.
 
 ## Architectural Principles
 
-WSL Studio should be built as a layered desktop application with clear ownership boundaries. The application should remain understandable to contributors, testable without running WSL for most business logic, and conservative about system-level operations.
+WSL Studio is built as a layered desktop application with clear ownership boundaries. The application remains understandable to contributors, testable without running WSL for most business logic, and conservative about system-level operations.
 
 Core principles:
 
-- UI code should not build command-line strings directly.
-- WSL state should be queried from official WSL behavior when accuracy matters.
-- Application-owned data should be separated from WSL-managed state.
-- Destructive operations should pass through explicit safety policies.
-- Parsing and process execution should be isolated and tested.
-- Features should be added through small, reviewable modules.
+- The UI does not call `wsl.exe` directly and does not build command-line strings.
+- ViewModels call application services; they do not execute processes or parse command output.
+- The application layer defines use cases and owns output parsing into structured models.
+- Infrastructure executes official WSL commands through the command runner and is the only layer that starts processes.
+- Core remains independent of the UI and of process execution.
+- WSL state is queried from official WSL behavior when accuracy matters; application-owned data is kept separate from WSL-managed state.
+- The application is read-only today. Destructive or state-changing operations are deferred to later phases and must pass through explicit safety policies.
+- Parsing and process execution are isolated and tested; features are added through small, reviewable modules.
 
 ## Planned Layers
 
@@ -77,9 +79,9 @@ Responsibilities:
 
 Infrastructure code should be hidden behind interfaces used by the application layer. This allows tests to substitute fake WSL command runners and controlled persistence implementations.
 
-## Responsibilities of Each Future Project
+## Responsibilities of Each Project
 
-The exact solution structure will be created in Phase 1. A likely structure is:
+The solution is organized into the following projects:
 
 ### WslStudio.App
 
@@ -90,19 +92,11 @@ Responsibilities:
 - App startup.
 - Windowing and navigation.
 - Views and controls.
+- View models and UI state (CommunityToolkit.Mvvm), including commands bound from the UI, UI-ready formatting, and presentation-level validation messages.
 - Dependency injection composition.
 - App-level resources and theme integration.
 
-### WslStudio.Presentation
-
-Presentation models and view models, if separated from the app project.
-
-Responsibilities:
-
-- View model state.
-- Commands bound from the UI.
-- UI-ready formatting.
-- Presentation-level validation messages.
+View models live in this project rather than a separate presentation assembly. They should remain thin and call application services rather than executing processes or parsing command output.
 
 ### WslStudio.Application
 
@@ -110,13 +104,13 @@ Workflow orchestration and use cases.
 
 Responsibilities:
 
-- Distribution management workflows.
-- Import/export workflows.
-- Safety policy enforcement.
+- Distribution discovery, dashboard, details, and health workflows.
+- Output parsing into structured models.
+- Safety policy enforcement (for future mutating operations).
 - Operation status handling.
-- Coordination between domain and infrastructure services.
+- Coordination between core models and infrastructure services.
 
-### WslStudio.Domain
+### WslStudio.Core
 
 Core models and rules.
 

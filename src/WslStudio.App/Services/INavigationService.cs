@@ -7,5 +7,5 @@ public interface INavigationService
 {
     void Initialize(Frame frame);
 
-    bool NavigateTo(NavigationPageKey pageKey);
+    bool NavigateTo(NavigationPageKey pageKey, object? parameter = null);
 }

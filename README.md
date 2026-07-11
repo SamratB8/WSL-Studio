@@ -4,7 +4,7 @@
 ![Platform](https://img.shields.io/badge/platform-Windows%2011-blue)
 ![Framework](https://img.shields.io/badge/.NET-10-purple)
 ![UI](https://img.shields.io/badge/UI-WinUI%203-blueviolet)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-Apache%202.0-green)
 ![Development](https://img.shields.io/badge/development-Phase%203%20WSL%20Workspace-orange)
 
 WSL Studio is an open-source native Windows 11 application for managing Windows Subsystem for Linux (WSL) through a modern WinUI 3 interface.
@@ -37,7 +37,7 @@ WSL Studio is currently focused on **read-only WSL workspace features**. Mutatin
 | Environment Overview | ✅ Complete |
 | Responsive Card Layouts | ✅ Complete |
 | Design System | ✅ Complete |
-| Diagnostic Report Export | ⏳ Planned |
+| Diagnostic Report Export | ✅ Complete |
 | Terminal Launch Helpers | ⏳ Planned |
 | Safe Lifecycle Operations | ⏳ Planned |
 | Backup & Recovery | ⏳ Planned |

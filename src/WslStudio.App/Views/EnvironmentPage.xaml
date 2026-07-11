@@ -1,0 +1,138 @@
+<Page
+    x:Class="WslStudio.App.Views.EnvironmentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WslStudio.App.Controls"
+    xmlns:viewModels="using:WslStudio.App.ViewModels"
+    Loaded="OnLoaded">
+    <Page.Resources>
+        <!--  Shared technical key/value card used by the WSL and Graphics sections.  -->
+        <DataTemplate x:Key="EnvironmentDetailCardTemplate" x:DataType="viewModels:OverviewCardViewModel">
+            <Border Style="{StaticResource CompactCardBorderStyle}">
+                <StackPanel Spacing="6">
+                    <TextBlock Style="{StaticResource ListHeaderTextBlockStyle}" Text="{x:Bind Title}" />
+                    <TextBlock Style="{StaticResource TechnicalValueTextBlockStyle}" Text="{x:Bind Value}" />
+                    <TextBlock Style="{StaticResource BodySecondaryTextBlockStyle}" Text="{x:Bind Description}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid
+            MaxWidth="{StaticResource PageMaxWidth}"
+            Padding="{StaticResource PagePadding}"
+            RowSpacing="{StaticResource CardRowSpacing}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <controls:SectionHeader Description="{Binding Subtitle}" />
+
+            <controls:LoadingState
+                Grid.Row="1"
+                x:Name="LoadingState"
+                x:Load="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                Message="Loading WSL environment information..." />
+
+            <controls:EmptyState
+                Grid.Row="1"
+                x:Name="EmptyState"
+                x:Load="{x:Bind ViewModel.IsEmpty, Mode=OneWay}"
+                Title="No environment information available"
+                Description="WSL did not report any environment information. This page only shows real read-only data returned by WSL."
+                Icon="Globe" />
+
+            <controls:ErrorState
+                Grid.Row="1"
+                x:Name="ErrorState"
+                x:Load="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                Title="Environment information could not load"
+                Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
+
+            <StackPanel
+                Grid.Row="1"
+                x:Name="EnvironmentState"
+                x:Load="{x:Bind ViewModel.HasEnvironment, Mode=OneWay}"
+                Spacing="14">
+
+                <Border Style="{StaticResource CompactCardBorderStyle}">
+                    <Grid ColumnSpacing="{StaticResource SectionColumnSpacing}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <controls:SectionHeader
+                            Title="Read-only sources"
+                            Description="Details are read from official WSL commands: wsl --version, wsl --status, and wsl --list --verbose. WSL Studio does not change WSL from this page." />
+                        <controls:StatusBadge
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Text="Read-only" />
+                    </Grid>
+                </Border>
+
+                <StackPanel Spacing="8">
+                    <controls:SectionHeader
+                        Title="WSL"
+                        Description="Core WSL component versions." />
+                    <ItemsRepeater
+                        ItemsSource="{x:Bind ViewModel.WslCards, Mode=OneWay}"
+                        ItemTemplate="{StaticResource EnvironmentDetailCardTemplate}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout
+                                ItemsStretch="Fill"
+                                MaximumRowsOrColumns="3"
+                                MinItemWidth="260"
+                                MinRowSpacing="14"
+                                MinColumnSpacing="14" />
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <controls:SectionHeader
+                        Title="Graphics"
+                        Description="Optional graphics components. Shown only when WSL reports them." />
+                    <ItemsRepeater
+                        ItemsSource="{x:Bind ViewModel.GraphicsCards, Mode=OneWay}"
+                        ItemTemplate="{StaticResource EnvironmentDetailCardTemplate}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout
+                                ItemsStretch="Fill"
+                                MaximumRowsOrColumns="2"
+                                MinItemWidth="360"
+                                MinRowSpacing="14"
+                                MinColumnSpacing="14" />
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <controls:SectionHeader
+                        Title="Environment"
+                        Description="Distribution and integration summary." />
+                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.EnvironmentCards, Mode=OneWay}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout
+                                ItemsStretch="Fill"
+                                MaximumRowsOrColumns="3"
+                                MinItemWidth="240"
+                                MinRowSpacing="14"
+                                MinColumnSpacing="14" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:OverviewCardViewModel">
+                                <controls:StatCard
+                                    Title="{x:Bind Title}"
+                                    Value="{x:Bind Value}"
+                                    Description="{x:Bind Description}" />
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

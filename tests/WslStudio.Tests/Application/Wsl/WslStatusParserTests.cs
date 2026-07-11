@@ -15,7 +15,7 @@ public sealed class WslStatusParserTests
         Assert.NotNull(result.StatusInfo);
         Assert.Equal("Ubuntu", result.StatusInfo.DefaultDistribution?.Value);
         Assert.Equal(2, result.StatusInfo.DefaultVersion);
-        Assert.Equal("5.15.167.4-1", result.StatusInfo.KernelVersion);
+        Assert.Equal("6.18.35.2-1", result.StatusInfo.KernelVersion);
     }
 
     [Fact]

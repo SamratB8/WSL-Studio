@@ -12,6 +12,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <StackPanel Spacing="8">
@@ -19,31 +20,68 @@
                 <TextBlock Style="{StaticResource PageSubtitleTextBlockStyle}" Text="{Binding Subtitle}" />
             </StackPanel>
 
-            <controls:LoadingState
+            <Grid
                 Grid.Row="1"
+                x:Name="FilterBar"
+                ColumnSpacing="{StaticResource CardColumnSpacing}"
+                Visibility="{x:Bind ViewModel.ToolbarVisibility, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <AutoSuggestBox
+                    MinWidth="240"
+                    VerticalAlignment="Bottom"
+                    PlaceholderText="Search distributions by name"
+                    QueryIcon="Find"
+                    Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ComboBox
+                    Grid.Column="1"
+                    MinWidth="160"
+                    DisplayMemberPath="Label"
+                    Header="Filter by state"
+                    ItemsSource="{x:Bind ViewModel.StateFilterOptions}"
+                    SelectedItem="{x:Bind ViewModel.SelectedStateFilter, Mode=TwoWay}" />
+
+                <ComboBox
+                    Grid.Column="2"
+                    MinWidth="160"
+                    DisplayMemberPath="Label"
+                    Header="Sort by"
+                    ItemsSource="{x:Bind ViewModel.SortOptions}"
+                    SelectedItem="{x:Bind ViewModel.SelectedSort, Mode=TwoWay}" />
+            </Grid>
+
+            <controls:LoadingState
+                Grid.Row="2"
                 x:Name="LoadingState"
                 x:Load="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                 Message="Loading distributions..." />
 
             <controls:EmptyState
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="EmptyState"
                 x:Load="{x:Bind ViewModel.IsEmpty, Mode=OneWay}"
-                Title="No distributions found"
-                Description="WSL did not report any installed distributions. This page only shows real read-only data returned by WSL."
-                Icon="Library" />
+                Title="{x:Bind ViewModel.EmptyStateTitle, Mode=OneWay}"
+                Description="{x:Bind ViewModel.EmptyStateDescription, Mode=OneWay}"
+                Icon="{x:Bind ViewModel.EmptyStateIcon, Mode=OneWay}" />
 
             <controls:ErrorState
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="ErrorState"
                 x:Load="{x:Bind ViewModel.HasError, Mode=OneWay}"
                 Title="Distribution discovery could not complete"
                 Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
 
             <ListView
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="DistributionsList"
                 x:Load="{x:Bind ViewModel.HasDistributions, Mode=OneWay}"
+                IsItemClickEnabled="True"
+                ItemClick="OnDistributionItemClick"
                 ItemsSource="{x:Bind ViewModel.Distributions, Mode=OneWay}"
                 SelectionMode="None">
                 <ListView.Header>
@@ -71,6 +109,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Style="{StaticResource ListPrimaryTextBlockStyle}" Text="{x:Bind Name}" />
@@ -84,6 +123,10 @@
                                 <controls:StatusBadge
                                     Grid.Column="3"
                                     Text="{x:Bind DefaultStatus}" />
+                                <SymbolIcon
+                                    Grid.Column="4"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Symbol="Forward" />
                             </Grid>
                         </Border>
                     </DataTemplate>

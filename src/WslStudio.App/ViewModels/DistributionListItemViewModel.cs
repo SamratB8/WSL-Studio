@@ -4,6 +4,8 @@ namespace WslStudio.App.ViewModels;
 
 public sealed class DistributionListItemViewModel(WslDistribution distribution)
 {
+    public DistributionName DistributionName { get; } = distribution.Name;
+
     public string Name { get; } = distribution.Name.Value;
 
     public string State { get; } = ToDisplayText(distribution.State);

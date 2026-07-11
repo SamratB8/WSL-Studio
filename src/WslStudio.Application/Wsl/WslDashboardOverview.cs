@@ -8,4 +8,5 @@ public sealed record WslDashboardOverview(
     int StoppedDistributionCount,
     int TotalDistributionCount,
     WslStatusInfo? StatusInfo,
-    WslVersionInfo? VersionInfo);
+    WslVersionInfo? VersionInfo,
+    IReadOnlyList<WslDistribution> Distributions);

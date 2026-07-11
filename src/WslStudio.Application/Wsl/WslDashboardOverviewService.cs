@@ -45,7 +45,8 @@ public sealed class WslDashboardOverviewService(
             StoppedDistributionCount: distributions.Count(distribution => distribution.State == WslDistributionState.Stopped),
             TotalDistributionCount: distributions.Count,
             statusInfo,
-            versionInfo);
+            versionInfo,
+            distributions);
 
         return WslDashboardOverviewResult.Success(overview);
     }

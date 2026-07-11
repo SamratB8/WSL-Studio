@@ -39,6 +39,11 @@
                     <SymbolIcon Symbol="Find" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItem Content="Environment" Tag="Environment">
+                <NavigationViewItem.Icon>
+                    <SymbolIcon Symbol="Globe" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.MenuItems>
 
         <Frame x:Name="ContentFrame" />

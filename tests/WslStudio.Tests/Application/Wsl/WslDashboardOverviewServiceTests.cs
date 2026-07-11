@@ -32,7 +32,7 @@ public sealed class WslDashboardOverviewServiceTests
         Assert.Equal(3, result.Overview.TotalDistributionCount);
         Assert.Equal(1, result.Overview.RunningDistributionCount);
         Assert.Equal(2, result.Overview.StoppedDistributionCount);
-        Assert.Equal("2.4.13.0", result.Overview.VersionInfo?.WslVersion);
+        Assert.Equal("2.9.3.0", result.Overview.VersionInfo?.WslVersion);
         Assert.Equal(2, result.Overview.StatusInfo?.DefaultVersion);
     }
 

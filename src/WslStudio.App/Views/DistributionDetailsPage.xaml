@@ -1,0 +1,119 @@
+<Page
+    x:Class="WslStudio.App.Views.DistributionDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WslStudio.App.Controls"
+    xmlns:viewModels="using:WslStudio.App.ViewModels"
+    Loaded="OnLoaded">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid
+            MaxWidth="{StaticResource PageMaxWidth}"
+            Padding="{StaticResource PagePadding}"
+            RowSpacing="{StaticResource PageRowSpacing}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid ColumnSpacing="{StaticResource CardColumnSpacing}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    AutomationProperties.Name="Back to distributions"
+                    Click="OnBackButtonClick"
+                    Style="{StaticResource SubtleButtonStyle}"
+                    ToolTipService.ToolTip="Back to distributions">
+                    <SymbolIcon Symbol="Back" />
+                </Button>
+
+                <StackPanel Grid.Column="1" Spacing="8">
+                    <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="{x:Bind ViewModel.DistributionDisplayName, Mode=OneWay}" />
+                    <TextBlock Style="{StaticResource PageSubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Subtitle}" />
+                </StackPanel>
+            </Grid>
+
+            <controls:LoadingState
+                Grid.Row="1"
+                x:Name="LoadingState"
+                x:Load="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                Message="Loading distribution details..." />
+
+            <controls:EmptyState
+                Grid.Row="1"
+                x:Name="EmptyState"
+                x:Load="{x:Bind ViewModel.IsEmpty, Mode=OneWay}"
+                Title="Distribution details are unavailable"
+                Description="{x:Bind ViewModel.EmptyMessage, Mode=OneWay}"
+                Icon="Library" />
+
+            <controls:ErrorState
+                Grid.Row="1"
+                x:Name="ErrorState"
+                x:Load="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                Title="Distribution details could not be loaded"
+                Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
+
+            <StackPanel
+                Grid.Row="1"
+                x:Name="DetailsContent"
+                x:Load="{x:Bind ViewModel.HasDetails, Mode=OneWay}"
+                Spacing="24">
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.SummaryCards, Mode=OneWay}">
+                    <ItemsRepeater.Layout>
+                        <UniformGridLayout
+                            ItemsStretch="Fill"
+                            MaximumRowsOrColumns="3"
+                            MinItemWidth="220"
+                            MinColumnSpacing="{StaticResource CardColumnSpacing}"
+                            MinRowSpacing="{StaticResource CardRowSpacing}" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:OverviewCardViewModel">
+                            <controls:StatCard
+                                Title="{x:Bind Title}"
+                                Value="{x:Bind Value}"
+                                Description="{x:Bind Description}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+
+                <controls:SectionHeader
+                    Title="Environment details"
+                    Description="Values are shown only when they are available through the current read-only WSL discovery flow." />
+
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.DetailItems, Mode=OneWay}">
+                    <ItemsRepeater.Layout>
+                        <UniformGridLayout
+                            ItemsStretch="Fill"
+                            MinItemWidth="300"
+                            MinColumnSpacing="16"
+                            MinRowSpacing="16" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:DistributionDetailItemViewModel">
+                            <Border Style="{StaticResource CompactCardBorderStyle}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Style="{StaticResource ListHeaderTextBlockStyle}" Text="{x:Bind Label}" />
+                                    <TextBlock Style="{StaticResource SectionTitleTextBlockStyle}" Text="{x:Bind Value}" />
+                                    <TextBlock Style="{StaticResource BodySecondaryTextBlockStyle}" Text="{x:Bind Description}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+
+                <controls:InfoCard
+                    Icon="View"
+                    Title="Read-only view"
+                    Description="This page does not start, stop, configure, import, export, or unregister the distribution. Additional details will remain unavailable until they can be obtained through a safe, supported source." />
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

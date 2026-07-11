@@ -24,6 +24,14 @@ public sealed partial class DistributionsPage : Page
         }
     }
 
+    private void OnDistributionItemClick(object sender, ItemClickEventArgs args)
+    {
+        if (args.ClickedItem is DistributionListItemViewModel distribution)
+        {
+            ViewModel.OpenDetailsCommand.Execute(distribution);
+        }
+    }
+
     private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
     {
         Bindings.Update();
