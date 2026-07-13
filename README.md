@@ -461,6 +461,18 @@ Helpful contribution areas include:
 
 Please review [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
+## Community and Support
+
+For quick questions, community discussion, testing feedback, and contributor coordination, join the Nova Systems Lab Discord server:
+
+[Join Nova Systems Lab on Discord](https://discord.gg/sfFyVyTfX8)
+
+For official project work:
+
+- Use GitHub Discussions for detailed proposals and long-term discussions.
+- Use GitHub Issues for confirmed bugs and actionable tasks.
+- Use Pull Requests for code and documentation changes.
+
 ## Development Philosophy
 
 WSL Studio follows a quality-first development approach.
