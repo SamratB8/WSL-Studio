@@ -7,6 +7,11 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-green)
 ![Development](https://img.shields.io/badge/development-Phase%203%20WSL%20Workspace-orange)
 
+[Website](https://novasystemslab.org) ·
+[Organization](https://novasystemslab.org) ·
+[Discussions](https://github.com/Nova-Systems-Lab/WSL-Studio/discussions) ·
+[Issues](https://github.com/Nova-Systems-Lab/WSL-Studio/issues)
+
 WSL Studio is an open-source native Windows 11 application for managing Windows Subsystem for Linux (WSL) through a modern WinUI 3 interface.
 
 The project focuses on providing a safe, discoverable, and Microsoft-style desktop experience built on top of officially supported WSL functionality. Rather than replacing the command line, WSL Studio complements it by exposing common management, diagnostics, inspection, and configuration workflows through a polished graphical interface.
@@ -472,6 +477,8 @@ For official project work:
 - Use GitHub Discussions for detailed proposals and long-term discussions.
 - Use GitHub Issues for confirmed bugs and actionable tasks.
 - Use Pull Requests for code and documentation changes.
+
+For private security reports, follow the [security policy](SECURITY.md) or contact [security@novasystemslab.org](mailto:security@novasystemslab.org).
 
 ## Development Philosophy
 
