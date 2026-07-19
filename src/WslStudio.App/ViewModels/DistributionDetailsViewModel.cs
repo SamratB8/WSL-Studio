@@ -1,15 +1,18 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using WslStudio.App.Navigation;
 using WslStudio.App.Services;
 using WslStudio.Application.Wsl;
+using WslStudio.Application.Wsl.Terminal;
 using WslStudio.Core.Wsl;
 
 namespace WslStudio.App.ViewModels;
 
 public sealed partial class DistributionDetailsViewModel(
     IWslDistributionDetailsService distributionDetailsService,
+    IWslTerminalService terminalService,
     INavigationService navigationService)
     : PageViewModelBase(
         "Distribution details",
@@ -33,7 +36,21 @@ public sealed partial class DistributionDetailsViewModel(
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsEmpty))]
+    [NotifyCanExecuteChangedFor(nameof(OpenTerminalCommand))]
     public partial bool HasDetails { get; set; }
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OpenTerminalCommand))]
+    public partial bool IsLaunchingTerminal { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsLaunchInfoOpen { get; set; }
+
+    [ObservableProperty]
+    public partial string LaunchInfoMessage { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial InfoBarSeverity LaunchInfoSeverity { get; set; } = InfoBarSeverity.Error;
 
     [ObservableProperty]
     public partial string DistributionDisplayName { get; set; } = string.Empty;
@@ -52,6 +69,8 @@ public sealed partial class DistributionDetailsViewModel(
 
     public bool IsEmpty => !IsLoading && !HasError && !HasDetails;
 
+    public bool CanOpenTerminal => HasDetails && !IsLaunchingTerminal;
+
     public void SetDistribution(DistributionName distributionName)
     {
         _distributionName = distributionName;
@@ -62,6 +81,35 @@ public sealed partial class DistributionDetailsViewModel(
     private void GoBack()
     {
         navigationService.NavigateTo(NavigationPageKey.Distributions);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanOpenTerminal))]
+    private async Task OpenTerminalAsync()
+    {
+        if (_distributionName is null || IsLaunchingTerminal)
+        {
+            return;
+        }
+
+        IsLaunchingTerminal = true;
+        IsLaunchInfoOpen = false;
+
+        try
+        {
+            WslTerminalLaunchResult result =
+                await terminalService.LaunchDistributionAsync(_distributionName, CancellationToken.None);
+
+            if (!result.Succeeded)
+            {
+                LaunchInfoSeverity = InfoBarSeverity.Error;
+                LaunchInfoMessage = result.UserSafeMessage;
+                IsLaunchInfoOpen = true;
+            }
+        }
+        finally
+        {
+            IsLaunchingTerminal = false;
+        }
     }
 
     [RelayCommand]

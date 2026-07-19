@@ -13,12 +13,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid ColumnSpacing="{StaticResource CardColumnSpacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Button
@@ -37,16 +39,34 @@
                     <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="{x:Bind ViewModel.DistributionDisplayName, Mode=OneWay}" />
                     <TextBlock Style="{StaticResource PageSubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Subtitle}" />
                 </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    AutomationProperties.Name="Open terminal for this distribution"
+                    Command="{x:Bind ViewModel.OpenTerminalCommand}"
+                    ToolTipService.ToolTip="Open an interactive WSL terminal for this distribution">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <SymbolIcon Symbol="NewWindow" />
+                        <TextBlock Text="Open Terminal" />
+                    </StackPanel>
+                </Button>
             </Grid>
 
-            <controls:LoadingState
+            <InfoBar
                 Grid.Row="1"
+                IsOpen="{x:Bind ViewModel.IsLaunchInfoOpen, Mode=TwoWay}"
+                Message="{x:Bind ViewModel.LaunchInfoMessage, Mode=OneWay}"
+                Severity="{x:Bind ViewModel.LaunchInfoSeverity, Mode=OneWay}" />
+
+            <controls:LoadingState
+                Grid.Row="2"
                 x:Name="LoadingState"
                 x:Load="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                 Message="Loading distribution details..." />
 
             <controls:EmptyState
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="EmptyState"
                 x:Load="{x:Bind ViewModel.IsEmpty, Mode=OneWay}"
                 Title="Distribution details are unavailable"
@@ -54,14 +74,14 @@
                 Icon="Library" />
 
             <controls:ErrorState
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="ErrorState"
                 x:Load="{x:Bind ViewModel.HasError, Mode=OneWay}"
                 Title="Distribution details could not be loaded"
                 Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
 
             <StackPanel
-                Grid.Row="1"
+                Grid.Row="2"
                 x:Name="DetailsContent"
                 x:Load="{x:Bind ViewModel.HasDetails, Mode=OneWay}"
                 Spacing="24">

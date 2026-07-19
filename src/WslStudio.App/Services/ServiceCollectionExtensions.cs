@@ -2,7 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using WslStudio.Application.Commands;
 using WslStudio.Application.Wsl;
 using WslStudio.Application.Wsl.Diagnostics;
+using WslStudio.Application.Wsl.Terminal;
 using WslStudio.Infrastructure.Commands;
+using WslStudio.Infrastructure.Terminal;
 using WslStudio.App.ViewModels;
 using WslStudio.App.Views;
 
@@ -30,6 +32,9 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDiagnosticReportFormatter, JsonDiagnosticReportFormatter>();
         services.AddTransient<IWslDiagnosticReportService, WslDiagnosticReportService>();
         services.AddSingleton<IFileSaveService, FileSaveService>();
+
+        services.AddSingleton<ITerminalProcessLauncher, ProcessTerminalLauncher>();
+        services.AddTransient<IWslTerminalService, WslTerminalService>();
 
         services.AddTransient<DashboardViewModel>();
         services.AddTransient<DistributionsViewModel>();
